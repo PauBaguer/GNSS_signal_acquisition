@@ -107,7 +107,7 @@ Fd=2e3;
 % Doppler shift Fd. Store it in a vector named s_rf_rx. The obtained signal
 % must have a signal power equal to Psig.
 
-s_rf_rx=real(Asig*s_bb_tx.*exp(1j*2*pi*t*(Fc+Fd)));
+s_rf_rx=real(1*s_bb_tx.*exp(1j*2*pi*t*(Fc+Fd)));
 
 %add noise
 SNR_dB=3;
@@ -134,7 +134,7 @@ Y_rf_rx_spectrum_db=10*log10((abs([Y_rf_rx(floor((NFFT/2))+1:1:end) Y_rf_rx(1:1:
 %plot the spectrum
 figure;
 plot(f,Y_rf_rx_spectrum_db);
-title('Received RF signal (Corrección Luis).');
+title('Received RF signal (CorrecciÃ³n Luis).');
 xlabel('Hz');
 ylabel('dB/Hz');
 
@@ -156,15 +156,14 @@ ylabel('dB/Hz');
 % autocorrelation estimation Rxx=(1/K)*(x*x'), where x is a vector
 % containing the signal or noise samples.
 
-Ps =   sum(abs(s_rf_rx) .^2)/Nsamples; 
-Pn = 1/Nsamples * sum(abs(noise) .^2);
-SNR_estim_dB=10*log10(Ps/Pn);
+Px = 1/Nsamples * abs(s_rf_rx.^2);
+SNR_estim_dB=10log(Px);
 
-disp(['Estimated SNR is ' num2str(SNR_estim_dB) ' vs. desired SNR: ' num2str(SNR_dB) ' [dB]']); % this is wrong!!
+disp(['Estimated SNR is ' num2str(SNR_estim_dB) ' vs. desired SNR: ' num2str(SNR_dB) ' [dB]']);
 
 %CN0_estim_dB=?
 
-%disp(['Estimated CN0 is ' num2str(CN0_estim_dB) ' [dB]']);
+disp(['Estimated CN0 is ' num2str(CN0_estim_dB) ' [dB]']);
 
 %% Downconvert the RF signal to baseband
 % design the LPF filters
@@ -178,11 +177,8 @@ BB_BW_Hz=Fc/2;
 % y=filtfilt(b,a,x), where x is the input signal vector and y is the filtered
 % output signal vector.
 
-
-s_bb_rx_I= y_rf_rx * 2 .* cos(2*pi*Fc*t);
-s_bb_rx_Q= y_rf_rx * (-2) .* sin(2*pi*Fc*t);
-s_bb_rx_I_filt= filtfilt(b,a,s_bb_rx_I);
-s_bb_rx_Q_filt= filtfilt(b,a,s_bb_rx_Q);
+s_bb_rx_I_filt=
+%s_bb_rx_Q_filt=?
 
 %ensamble the recovered baseband signal (complex envelope)
 s_bb_rx=s_bb_rx_I_filt+1j*s_bb_rx_Q_filt;
@@ -202,13 +198,10 @@ figure;
 % the approximated LPF filter bandwidth and estimate the approximated BPSK signal bandwidth
 
 plot(f,S_bb_rx_spectrum_db);
-title('Received baseband signal (Corrección Luis)');
+title('Received baseband signal (CorrecciÃ³n Luis)');
 xlabel('Hz');
 ylabel('dBW/Hz');
 
-
-% ha de sortir desplaçada pel dopler
-% surt la forma de caiguda del filtre, amb BW 3 dB.
 
 
 
