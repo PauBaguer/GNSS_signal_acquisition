@@ -27,7 +27,6 @@ t=0:Ts:(Tsig-Ts);
 Nsamples=length(t);
 
 %% generate the transmitted satellite baseband signal
-%Generem senyal de 4 satèl·lits, però ens quedem en 1a.
 NSATS=4;
  for numsat=1:1:NSATS
      % Generate GPS L1 CA signal using our custom generator function. 
@@ -225,7 +224,7 @@ CN0_estim_dB_real = 45;
 
 SNR_dB=CN0_estim_dB_real - 10*log10(BB_BW_Hz);
 
-disp(['Estimated SNR is ' num2str(SNR_dB) ' vs. desired SNR: ' num2str(SNR_dB) ' [dB]']);
+disp(['Estimated SNR is ' num2str(CN0_estim_dB_real) ' vs. desired SNR: ' num2str(SNR_dB) ' [dB]']);
 disp(['Estimated CN0 is ' num2str(CN0_estim_dB_real) ' [dB]']);
 
 

@@ -76,38 +76,11 @@ ylabel('Rdd');
 % Compute the estimation of the autocorrelation gain defined as the ratio 
 % between abs(Rdd(tau=0)) and abs(Rdd(tau>>1chip)). Convert it to dB.
 
-%provar amb varis valors o fer mitja.
-autocorrelation_gain_dB = 10*log10(abs(Rdd(0+Nsamples/2+1))/abs(Rdd(3050+Nsamples/2+1))) % els valors son de K
+autocorrelation_gain_dB = 10*log10(Rdd(0)/Rdd)
 
 % **** QUESTION 5 ****:
 % Compute the estimation of the cross-correlation gain between different satellite's PRNs defined as the ratio 
 % between abs(R_(d_sat1,d_sat1)(tau=0)) and abs(R_(d_sat1,d_sat2)(tau=0)). Convert it to dB.
-crosscorrelation_gain_dB = 10*log10(abs(Rdd(0+Nsamples/2+1))/abs(Rdd(3050+Nsamples/2+1))) % els valors son de K
-%ACABAR AIXOOOOOOO
-for m=1:length(shift_samples)
-     Rdd(m)= d* circshift(d',shift_samples(m)) / Nsamples; % d' es fer hermético (transposar i conjugar)
-end
-
-
-% **** QUESTION 3 ****:
-% Analize the following two figures. Check the X axis units. Measure the
-% autocorrelation lag (or code phase shift) in CHIPS UNITS that produces a reduction of
-% 50% of the autocorrelation gain. Convert the result to samples.
-plot(shift_samples,Rdd)
-title('Circular Autocorrelation Rdd(tau)');
-xlabel('Samples');
-ylabel('Rdd');
-
-figure;
-fchip=Rc_L1_CA;
-samples_per_chip=Fs/fchip;
-shift_chips=shift_samples/samples_per_chip;
-plot(shift_chips,Rdd)
-title('Circular Autocorrelation Rdd(tau)');
-xlabel('Chips');
-ylabel('Rdd');
-
-
 
 %% Autocorrelation vs. frequency shift
 %autocorrelation maximum abs(Rdd(tau=0)) vs. frequency shift

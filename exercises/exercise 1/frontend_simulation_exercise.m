@@ -162,9 +162,9 @@ SNR_estim_dB=10*log10(Ps/Pn);
 
 disp(['Estimated SNR is ' num2str(SNR_estim_dB) ' vs. desired SNR: ' num2str(SNR_dB) ' [dB]']); % this is wrong!!
 
-%CN0_estim_dB=?
+CN0_estim_dB= SNR_estim_dB + 10*log10(BB_BW_Hz);
 
-%disp(['Estimated CN0 is ' num2str(CN0_estim_dB) ' [dB]']);
+disp(['Estimated CN0 is ' num2str(CN0_estim_dB) ' [dB]']);
 
 %% Downconvert the RF signal to baseband
 % design the LPF filters
